@@ -1,4 +1,7 @@
-# fast_json_xml_convertor
+# FAST JSON XML Convertor
 
-Run it:
+### Build it:
 docker-compose up --build
+
+### Run it:
+docker-compose up
