@@ -1,8 +1,10 @@
+"""App module."""
+
 from fastapi import FastAPI
 
 app = FastAPI()
 
 
 @app.get("/")
-def read_root():
+def home():
     return {"Hello": "World"}
