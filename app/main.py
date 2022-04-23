@@ -1,8 +1,9 @@
 """App module."""
 
 import json
-from fastapi import FastAPI
 from xml.etree.ElementTree import fromstring
+
+from fastapi import FastAPI
 
 from app.parsers import parse_xml, parse_json
 
@@ -28,7 +29,6 @@ def xml2json(xml_string: str):
 @app.post("/json2xml/")
 def json2xml(json_string: str):
     """Returns JSON converted to XML."""
-    items_list = []
     json_dict = json.loads(json_string)
 
     return parse_json(json_dict)

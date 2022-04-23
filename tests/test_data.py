@@ -1,4 +1,6 @@
-xml_string = """
+"""Data for tests."""
+
+XML_STRING = """
 <ITEM type="object"> 
     <ITEM key="apple" type="integer" value="7"/>
     <ITEM key="orange" type="float" value="4.1"/>
@@ -15,7 +17,7 @@ xml_string = """
 </ITEM> """
 
 
-json_string = """
+JSON_STRING = """
 { 
   "apple": 7,
   "orange": 4.1,

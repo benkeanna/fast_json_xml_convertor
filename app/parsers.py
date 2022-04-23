@@ -1,7 +1,8 @@
-import json
+"""Parsers module."""
 
 
 def _set_dict_item_value(items_dict, item_name, item_value, item_type):
+    """Sets value to dict according to data type."""
     item_types = {
         'string': str,
         'integer': int,
@@ -21,6 +22,7 @@ def _set_dict_item_value(items_dict, item_name, item_value, item_type):
 
 
 def parse_xml(items_xml, items_dict):
+    """Parses node in XML tree."""
     for item in items_xml:
         item_type = item.get('type')
         item_name = item.get('key')
@@ -54,28 +56,29 @@ def _set_item_list_value(item):
         item_type_element = item
 
     item_type = item_types.get(type(item_type_element), None)
-    if type(item) == tuple:
+    if isinstance(item, tuple):
         if item[1]:
-            tag = '<ITEM key="{}" type="{}" value="{}"/>'.format(item[0], item_type, item[1])
+            tag = F'<ITEM key="{item[0]}" type="{item_type}" value="{item[1]}"/>'
         else:
-            tag = '<ITEM key="{}" type="null"/> '.format(item[0])
+            tag = F'<ITEM key="{item[0]}" type="null"/> '
     else:
-        tag = '<ITEM type="{}" value="{}"/> '.format(item_type, str(item).lower())
+        tag = F'<ITEM type="{item_type}" value="{str(item).lower()}"/> '
     return tag
 
 
 def parse_json_items(json_dict, items_list):
+    """Parses item in JSON dict."""
     for item in json_dict.items():
-        if type(item[1]) is dict:
-            help_list = ['<ITEM key="{}" type="object">'.format(item[0])]  # opening tag
+        if isinstance(item[1], dict):
+            help_list = [F'<ITEM key="{item[0]}" type="object">']  # opening tag
             parse_json_items(item[1], help_list)
             help_list.append('</ITEM>')  # closing tag
             items_list.extend(help_list)
 
-        elif type(item[1]) is list:
-            help_list = ['<ITEM key="{}" type="list">'.format(item[0])]  # opening tag
+        elif isinstance(item[1], list):
+            help_list = [F'<ITEM key="{item[0]}" type="list">']  # opening tag
             for inner_item in item[1]:
-                if type(inner_item) == dict:
+                if isinstance(inner_item, dict):
                     # problem that we don't know how many elements will be inside
                     inner_help_list = ['<ITEM type="object">']  # opening tag
                     parse_json_items(inner_item, inner_help_list)
@@ -91,6 +94,7 @@ def parse_json_items(json_dict, items_list):
 
 
 def parse_json(json_dict):
+    """Parses JSON dict."""
     items_list = ['<ITEM type="object">']
     parse_json_items(json_dict, items_list)
     items_list.append('</ITEM>')
