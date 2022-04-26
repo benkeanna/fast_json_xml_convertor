@@ -19,6 +19,9 @@ templates = Jinja2Templates(directory=str(Path(BASE_DIR, 'templates')))
 
 
 class UserText(BaseModel):
+    """User text model."""
+    # pylint: disable=too-few-public-methods
+    # FastAPI docs says class is fine
     text: str
 
 
@@ -55,36 +58,36 @@ def json2xml(request: Request, json_string: str = Form(...)):
 
 
 @app.get("/user")
-def user(email: str):
+def get_user(email: str):
     """Returns user with given email."""
     try:
         return queries.get_user(email)
-    except QueryError as e:
-        raise HTTPException(status_code=404, detail="User not found")
+    except QueryError as error:
+        raise HTTPException(status_code=404, detail="User not found") from error
 
 
 @app.post("/user")
-def user(email: str, user: UserText):
+def create_user(email: str, user: UserText):
     """Returns created user."""
     try:
         usr = queries.create_user(email, user.text)
-    except QueryError as e:
-        raise HTTPException(status_code=400, detail="Duplicate entry")
+    except QueryError as error:
+        raise HTTPException(status_code=400, detail="Duplicate entry") from error
     return usr
 
 
 @app.delete("/user")
-def user(email: str):
+def delete_user(email: str):
     """Deletes user."""
     try:
         email = queries.delete_user(email)
         return email
-    except QueryError as e:
-        raise HTTPException(status_code=404, detail="User not found")
+    except QueryError as error:
+        raise HTTPException(status_code=404, detail="User not found") from error
 
 
 @app.get("/users")
-def user(limit: int = 10, offset: int = 0):
+def get_all_users(limit: int = 10, offset: int = 0):
     """Returns all existing users."""
 
     return queries.get_all_users(limit, offset)

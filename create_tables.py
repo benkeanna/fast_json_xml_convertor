@@ -1,8 +1,11 @@
+"""Initial migration."""
+
 import psycopg2
 
 
 def create_tables():
-    """ create tables in the PostgreSQL database"""
+    """Create tables in the PostgreSQL database."""
+
     command = """
         CREATE TABLE "user" (
             email VARCHAR(255) PRIMARY KEY,
@@ -11,7 +14,8 @@ def create_tables():
         """
     conn = None
     try:
-        conn = psycopg2.connect("dbname=fast user=username password=password host=localhost port=54320")
+        conn = psycopg2.connect(
+            "dbname=fast user=username password=password host=localhost port=54320")
         cur = conn.cursor()
 
         cur.execute(command)
@@ -19,7 +23,7 @@ def create_tables():
         cur.close()
 
         conn.commit()
-    except (Exception, psycopg2.DatabaseError) as error:
+    except psycopg2.DatabaseError as error:
         print(error)
     finally:
         if conn is not None:
