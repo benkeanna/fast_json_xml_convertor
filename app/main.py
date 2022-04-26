@@ -1,4 +1,5 @@
 """App module."""
+# pylint: disable=no-name-in-module
 
 import json
 from xml.etree.ElementTree import fromstring
