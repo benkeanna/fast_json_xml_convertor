@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>XML/JSON Converter</title>
+</head>
+<body>
+
+<h1>XML/JSON Converter</h1>
+
+<form action="{{ url_for('xml2json') }}" method="POST">
+  <div>
+    <label for="xml_string">Enter XML string:</label>
+    <textarea name="xml_string" id="xml_string" rows="30" cols="50"></textarea>
+  </div>
+  <div>
+    <button  type="submit">Convert to JSON.</button>
+  </div>
+</form>
+
+  <div>
+    <pre>{{ converted_to_json }}</pre>
+  </div>
+
+<form action="{{ url_for('json2xml') }}" method="POST">
+  <div>
+    <label for="json_string">Enter JSON string:</label>
+    <textarea name="json_string" id="json_string" rows="30" cols="50"></textarea>
+  </div>
+  <div>
+    <button type="submit">Convert to XML.</button>
+  </div>
+</form>
+
+  <div>
+    <pre>{{ converted_to_xml }}</pre>
+  </div>
+
+</body>
+</html>
