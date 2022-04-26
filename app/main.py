@@ -84,7 +84,7 @@ def user(email: str):
 
 
 @app.get("/users")
-def user():
+def user(limit: int = 10, offset: int = 0):
     """Returns all existing users."""
 
-    return queries.get_all_users()
+    return queries.get_all_users(limit, offset)

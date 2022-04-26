@@ -47,9 +47,9 @@ def delete_user(email):
             raise QueryError('Entry does not exist.')
 
 
-def get_all_users():
+def get_all_users(limit, offset):
     with cursor() as cur:
-        sql = """SELECT * FROM "user";"""
-        cur.execute(sql)
+        sql = """SELECT * FROM "user" ORDER BY email limit %s offset %s;"""
+        cur.execute(sql, (limit, offset,))
         return cur.fetchall()
 
