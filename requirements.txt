@@ -5,3 +5,4 @@ jinja2==2.11.3
 python-multipart
 psycopg2-binary
 markupsafe==2.0.1
+requests~=2.25.1
